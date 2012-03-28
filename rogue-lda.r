@@ -3,7 +3,11 @@
 # "Unsupervised Modelling of Player Style with LDA"
 # Submitted to IEEE Transactions on Computational Intelligence & AI in Games.
 # 
-# Supplement: R script for Rogue Trooper data analysis
+# Supplementry R script for Rogue Trooper data analysis
+#
+# rogue-lda.r
+# Prepare Rogue combat feature data and apply LDA
+#
 # Author: Jeremy Gow
 # Edited: 28 March 2012
 #
@@ -80,15 +84,16 @@ player.cov <- function(i) {
   return(cov(fea.nz[fea.nz$player_id == i, -1]))
 }
 
-# Compute the log determinants
+# Log determinants of player covariance matrices
 logDets <- NULL 
 for (i in 1:32) {
   logDets[i] <- determinant(player.cov(i), logarithm=T)$modulus
 }
 
 # Distributed in approx. 3 clumps
+png(paste(images, "player-logdets.png", sep=""), res=72)
 hist(logDets, n=20, xlab="Log determinant of covariance for players")
-
+dev.off()
 
 ######################################################
 #
@@ -108,19 +113,18 @@ player.means <- data.frame(predict(lda.res, data.frame(lda.res$means))$x)
 # Plot LDA results
 #
 
-tciaig.plot.lda <- function() {
-  xlab <- "LD1"
-  ylab <- "LD2"
+xlab <- "LD1"
+ylab <- "LD2"
 
-  png(paste(images, "player-lda.png", sep=""), res=72)
-  plot(lda.res, dimen=2, cex=0.8, xlab=xlab, ylab=ylab)
-  dev.off()
+png(paste(images, "player-lda.png", sep=""), res=72)
+plot(lda.res, dimen=2, cex=0.8, xlab=xlab, ylab=ylab)
+dev.off()
 
-  png(paste(images, "player-centroids.png", sep=""), res=72)
-  plot(LD2 ~ LD1, data=player.means, xlab=xlab, ylab=ylab, pch=" ")
-  text(LD2 ~ LD1, data=player.means, labels=1:32)
-  dev.off()
-}
+png(paste(images, "player-centroids.png", sep=""), res=72)
+plot(LD2 ~ LD1, data=player.means, xlab=xlab, ylab=ylab, pch=" ")
+text(LD2 ~ LD1, data=player.means, labels=1:32)
+dev.off()
+
 
 ######################################################################
 #
@@ -129,12 +133,10 @@ tciaig.plot.lda <- function() {
 
 fea4 <- cbind(fea3, data.frame(predict(lda.res, data.frame(fea3[,-1]))$x))
 
-
 # Display ordered coefficients for linear discriminant
 lda.coeff <- function(ld=1) {
   data.frame(sort(lda.res$scaling[, ld]))
 }
-
 
 lda.coeffs <- function() {
     sca <- lda.res$scaling
