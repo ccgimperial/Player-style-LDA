@@ -1,5 +1,16 @@
-Gow, Baumgarten, Cairns, Colton & Miller, “Unsupervised Modelling of
-Player Style with LDA”. Submitted to Transactions on Computational
-Intelligence & AI in Games.
+Supplementry material for Gow, Baumgarten, Cairns, Colton & Miller,
+“Unsupervised Modelling of Player Style with LDA”. Submitted to
+Transactions on Computational Intelligence & AI in Games.
 
-Supplementry Material
+
+snakeotron.csv		Snakeotron feature data
+rogue-combats.csv	Rogue Trooper feature data
+
+snakeotron-lda.r	LDA analysis
+rogue-lda.r		
+
+rogue-kmeans.r		k-means clustering of LDA results
+rogue-pca.r		PCA analysis
+
+
+

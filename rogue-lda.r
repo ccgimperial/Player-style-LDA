@@ -11,6 +11,8 @@
 # Author: Jeremy Gow
 # Edited: 28 March 2012
 #
+# NOTE: create a directory 'images' before running this script
+#
 library(MASS)
 setEPS()
 images <- "images/"
